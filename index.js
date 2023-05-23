@@ -6,19 +6,33 @@ const morgan = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-//Middlewares
+const userRoute = require("./routes/user.routes");
+const notFoundMiddleware = require("./middlewares/not-found.js");
+const errorHandlerMiddleware = require("./middlewares/errorHandler.js");
+
+//Config
 app.use(morgan("dev"));
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
-//Ruta principal
-app.get("/", (req, res) => {
-  res.send("Hola mundo");
-});
+if (process.env.NODE_ENV !== "PRODUCTION") {
+  require("dotenv").config({
+    path: "./.env",
+  });
+}
 
-//Listener
-app.listen(PORT, () => {
-  console.log(`Example app listening at http://localhost:${PORT}`);
-});
+//Routes
+app.use("/api/user", userRoute);
+
+//Error handling middlewares
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
+
+module.exports = app;
