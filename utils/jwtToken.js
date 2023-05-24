@@ -9,7 +9,7 @@ const sendTokenCookie = (user, statusCode, res) => {
     Secure: true,
   };
 
-  res.status(statusCode).cookie("usertoken", token, options).json({
+  res.status(statusCode).cookie("token", token, options).json({
     success: true,
     token,
     firstname,

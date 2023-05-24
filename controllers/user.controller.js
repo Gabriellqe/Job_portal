@@ -2,6 +2,7 @@ const userModel = require("../models/user.model");
 const asyncHandler = require("express-async-handler");
 const ErrorHandler = require("../utils/errorHandler");
 const sendTokenCookie = require("../utils/jwtToken");
+const isValidMongoId = require("../utils/validateMongoId");
 
 //create a user
 const createUser = asyncHandler(async (req, res, next) => {
@@ -59,13 +60,70 @@ const loginUser = asyncHandler(async (req, res, next) => {
   }
 });
 
-const getUser = async (req, res) => {
+//Get all users
+const getAllUser = asyncHandler(async (req, res, next) => {
   try {
-    const user = await userModel.find();
-    res.json(user);
+    const allUsers = await userModel.find();
+    res.status(200).json({
+      success: true,
+      message: "All users",
+      data: allUsers,
+    });
   } catch (error) {
-    res.status(500).json({ message: error });
+    return next(new ErrorHandler(error.message, 500));
   }
-};
+});
 
-module.exports = { createUser, getUser, loginUser };
+//Update user
+const updateUser = asyncHandler(async (req, res, next) => {
+  const { _id } = req.user;
+  isValidMongoId(_id);
+  const { firstname, lastname, mobile, profession } = req.body;
+  try {
+    const findUser = await userModel.findById(_id);
+
+    if (!findUser) {
+      return next(new ErrorHandler("User doesn't exists", 400));
+    }
+
+    const updateUser = await userModel.findByIdAndUpdate(
+      _id,
+      {
+        firstname: firstname || user.firstname,
+        lastname: lastname || user.lastname,
+        mobile: mobile || user.mobile,
+        profession: profession || user.profession,
+      },
+      { new: true }
+    );
+    return res.status(200).json({
+      success: true,
+      message: "User updated successfully",
+      data: updateUser,
+    });
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+});
+
+//Delete user
+const deleteUser = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const deleteUser = await userModel.findByIdAndDelete(id);
+    if (!deleteUser) {
+      return next(new ErrorHandler("User doesn't exists", 400));
+    }
+    return res.status(200).json({
+      success: true,
+      message: "User deleted successfully",
+      data: deleteUser,
+    });
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+});
+
+//Get user by id
+
+module.exports = { createUser, getAllUser, loginUser, updateUser, deleteUser };

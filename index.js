@@ -5,22 +5,24 @@ const PORT = process.env.PORT || 8000;
 const morgan = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 const userRoute = require("./routes/user.routes");
 const notFoundMiddleware = require("./middlewares/not-found.js");
 const errorHandlerMiddleware = require("./middlewares/errorHandler.js");
 
 //Config
-app.use(morgan("dev"));
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:3000",
     credentials: true,
   })
 );
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(morgan("dev"));
 
 if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({
