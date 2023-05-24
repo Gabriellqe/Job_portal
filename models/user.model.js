@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema(
   {
     firstname: { type: String, required: true },
     lastname: { type: String, required: true },
     email: { type: String, required: true, unique: true, index: true },
-    user_imgage: {
+    user_image: {
       type: String,
       required: true,
       default:
@@ -14,8 +15,8 @@ const userSchema = new mongoose.Schema(
     },
     mobile: { type: String, required: true, unique: true, index: true },
     password: { type: String, required: true },
-    roles: { type: String, required: true },
-    profession: { type: String, default: "user" },
+    roles: { type: String, required: true, default: "user" },
+    profession: { type: String, required: true },
     isBlocked: { type: Boolean, default: false },
     passwordResetToken: String,
     passwordChangedAt: Date,
@@ -26,5 +27,21 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+userSchema.pre("save", async function (next) {
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hashSync(this.password, salt);
+  next();
+});
+
+userSchema.methods.comparePassword = async function (password) {
+  return await bcrypt.compareSync(password, this.password);
+};
+
+userSchema.methods.getJwtToken = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
+    expiresIn: process.env.JWT_EXPIRES,
+  });
+};
 
 module.exports = mongoose.model("User", userSchema);
