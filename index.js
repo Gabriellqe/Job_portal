@@ -6,24 +6,28 @@ const morgan = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const passport = require("passport");
+const session = require("express-session");
+const corsOptions = require("./config/corsOptions");
+const sessionOptions = require("./config/sessionOptions");
+//const MongoStore = require("connect-mongo");
 
 const userRoute = require("./routes/user.routes");
+const googleRouter = require("./routes/google.routes");
 const notFoundMiddleware = require("./middlewares/not-found.js");
 const errorHandlerMiddleware = require("./middlewares/errorHandler.js");
+const passportSetup = require("./utils/passport");
 
 //Config
+app.use(session(sessionOptions));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-  })
-);
+app.use(cors(corsOptions));
 app.use(morgan("dev"));
-
 if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({
     path: "./.env",
@@ -31,7 +35,11 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 }
 
 //Routes
+app.get("/", (req, res) => {
+  res.send(`<a href="http://localhost:5000/google">Login with google</a>`);
+});
 app.use("/api/user", userRoute);
+app.use("/", googleRouter);
 
 //Error handling middlewares
 app.use(notFoundMiddleware);
