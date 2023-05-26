@@ -14,6 +14,7 @@ const sessionOptions = require("./config/sessionOptions");
 
 const userRoute = require("./routes/user.routes");
 const tutCatRoute = require("./routes/tutCat.routes");
+const tutorialRoute = require("./routes/tutorial.routes");
 const googleRouter = require("./routes/google.routes");
 const notFoundMiddleware = require("./middlewares/not-found.js");
 const errorHandlerMiddleware = require("./middlewares/errorHandler.js");
@@ -41,6 +42,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/user", userRoute);
 app.use("/api/tutorial/category", tutCatRoute);
+app.use("/api/tutorial", tutorialRoute);
 app.use("/", googleRouter);
 
 //Error handling middlewares
