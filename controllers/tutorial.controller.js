@@ -94,6 +94,7 @@ const updateTutorial = asyncHandler(async (req, res, next) => {
     return next(new ErrorHandler(error.message, 500));
   }
 });
+
 const deleteTutorial = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   try {
