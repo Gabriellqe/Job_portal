@@ -13,6 +13,7 @@ const sessionOptions = require("./config/sessionOptions");
 //const MongoStore = require("connect-mongo");
 
 const userRoute = require("./routes/user.routes");
+const tutCatRoute = require("./routes/tutCat.routes");
 const googleRouter = require("./routes/google.routes");
 const notFoundMiddleware = require("./middlewares/not-found.js");
 const errorHandlerMiddleware = require("./middlewares/errorHandler.js");
@@ -39,6 +40,7 @@ app.get("/", (req, res) => {
   res.send(`<a href="http://localhost:5000/google">Login with google</a>`);
 });
 app.use("/api/user", userRoute);
+app.use("/api/tutorial/category", tutCatRoute);
 app.use("/", googleRouter);
 
 //Error handling middlewares
