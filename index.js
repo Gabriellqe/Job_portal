@@ -10,12 +10,12 @@ const passport = require("passport");
 const session = require("express-session");
 const corsOptions = require("./config/corsOptions");
 const sessionOptions = require("./config/sessionOptions");
-//const MongoStore = require("connect-mongo");
 
 const userRoute = require("./routes/user.routes");
 const tutCatRoute = require("./routes/tutCat.routes");
 const tutorialRoute = require("./routes/tutorial.routes");
 const newsLetterRoute = require("./routes/newsLetter.routes");
+const reviewRoute = require("./routes/review.routes");
 const googleRouter = require("./routes/google.routes");
 const notFoundMiddleware = require("./middlewares/not-found.js");
 const errorHandlerMiddleware = require("./middlewares/errorHandler.js");
@@ -45,6 +45,7 @@ app.use("/api/user", userRoute);
 app.use("/api/tutorial/category", tutCatRoute);
 app.use("/api/tutorial", tutorialRoute);
 app.use("/api/newsletter", newsLetterRoute);
+app.use("/api/review", reviewRoute);
 app.use("/", googleRouter);
 
 //Error handling middlewares
