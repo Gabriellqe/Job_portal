@@ -16,6 +16,7 @@ const tutCatRoute = require("./routes/tutCat.routes");
 const tutorialRoute = require("./routes/tutorial.routes");
 const newsLetterRoute = require("./routes/newsLetter.routes");
 const reviewRoute = require("./routes/review.routes");
+const contactRoute = require("./routes/contact.routes");
 const googleRouter = require("./routes/google.routes");
 const notFoundMiddleware = require("./middlewares/not-found.js");
 const errorHandlerMiddleware = require("./middlewares/errorHandler.js");
@@ -46,6 +47,7 @@ app.use("/api/tutorial/category", tutCatRoute);
 app.use("/api/tutorial", tutorialRoute);
 app.use("/api/newsletter", newsLetterRoute);
 app.use("/api/review", reviewRoute);
+app.use("/api/contact", contactRoute);
 app.use("/", googleRouter);
 
 //Error handling middlewares
