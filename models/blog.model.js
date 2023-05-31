@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-let videoSchema = new mongoose.Schema(
+let blogSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -23,10 +23,6 @@ let videoSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    video_url: {
-      type: String,
-      required: true,
-    },
     keywords: {
       type: [],
       required: true,
@@ -37,4 +33,4 @@ let videoSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Video", videoSchema);
+module.exports = mongoose.model("Blog", blogSchema);

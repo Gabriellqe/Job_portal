@@ -13,12 +13,16 @@ const sessionOptions = require("./config/sessionOptions");
 
 const userRoute = require("./routes/user.routes");
 const tutCatRoute = require("./routes/tutCat.routes");
+const docCatRoute = require("./routes/docCat.routes");
+const blogCatRoute = require("./routes/blogCat.routes");
+const videoCatRoute = require("./routes/videoCat.routes");
 const tutorialRoute = require("./routes/tutorial.routes");
 const newsLetterRoute = require("./routes/newsLetter.routes");
 const reviewRoute = require("./routes/review.routes");
 const contactRoute = require("./routes/contact.routes");
 const videoRoute = require("./routes/video.routes");
-const docRoute = require("./routes/documentation.routes");
+const blogRoute = require("./routes/blog.routes");
+const docRoute = require("./routes/doc.routes");
 const googleRouter = require("./routes/google.routes");
 const notFoundMiddleware = require("./middlewares/not-found.js");
 const errorHandlerMiddleware = require("./middlewares/errorHandler.js");
@@ -46,12 +50,17 @@ app.get("/", (req, res) => {
 });
 app.use("/api/user", userRoute);
 app.use("/api/tutorial/category", tutCatRoute);
+app.use("/api/doc/category", docCatRoute);
+app.use("/api/blog/category", blogCatRoute);
+app.use("/api/video/category", videoCatRoute);
 app.use("/api/tutorial", tutorialRoute);
 app.use("/api/newsletter", newsLetterRoute);
 app.use("/api/review", reviewRoute);
 app.use("/api/contact", contactRoute);
 app.use("/api/video", videoRoute);
+app.use("/api/blog", blogRoute);
 app.use("/api/doc", docRoute);
+
 app.use("/", googleRouter);
 
 //Error handling middlewares
