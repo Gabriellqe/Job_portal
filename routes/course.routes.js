@@ -5,6 +5,7 @@ const {
   getAllCourses,
   getCourse,
   getCoursesByCategory,
+  getParticularInstructorCourse,
   updateCourse,
   deleteCourse,
 } = require("../controllers/course.controller");
@@ -22,5 +23,8 @@ router
   .route("/:id")
   .patch(isAuthenticatedBoth, updateCourse)
   .delete(isAuthenticatedBoth, deleteCourse);
+router
+  .route("/instructor/allcourses")
+  .get(isAuthenticatedBoth, getParticularInstructorCourse);
 
 module.exports = router;

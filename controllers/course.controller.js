@@ -82,6 +82,25 @@ const getCoursesByCategory = asyncHandler(async (req, res, next) => {
   }
 });
 
+const getParticularInstructorCourse = asyncHandler(async (req, res, next) => {
+  const { _id } = req.user;
+
+  try {
+    const course = await courseModel.find({ instructor: _id });
+    if (!course) {
+      return next(new ErrorHandler("Course not found", 404));
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Course fetched successfully",
+      data: course,
+    });
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+});
+
 const updateCourse = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   try {
@@ -123,6 +142,7 @@ module.exports = {
   getAllCourses,
   getCourse,
   getCoursesByCategory,
+  getParticularInstructorCourse,
   updateCourse,
   deleteCourse,
 };
