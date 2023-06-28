@@ -16,7 +16,7 @@ const postDocCategory = asyncHandler(async (req, res, next) => {
       data: newDocCat,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -30,7 +30,7 @@ const getAllDocCategory = asyncHandler(async (req, res, next) => {
       data: allDocCat,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -48,7 +48,7 @@ const getDocCategory = asyncHandler(async (req, res, next) => {
       data: docCat,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -73,7 +73,7 @@ const updateDocCategory = asyncHandler(async (req, res, next) => {
       data: updateDocCat,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -90,7 +90,7 @@ const deleteDocCategory = asyncHandler(async (req, res, next) => {
       message: "Doc Category deleted successfully",
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 

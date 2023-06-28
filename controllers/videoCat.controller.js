@@ -17,7 +17,7 @@ const postVideoCategory = asyncHandler(async (req, res, next) => {
       data: newVideoCat,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -31,7 +31,7 @@ const getAllVideoCategory = asyncHandler(async (req, res, next) => {
       data: allVideoCat,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -49,7 +49,7 @@ const getVideoCategory = asyncHandler(async (req, res, next) => {
       data: videoCat,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -74,7 +74,7 @@ const updateVideoCategory = asyncHandler(async (req, res, next) => {
       data: updateVideoCat,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -91,7 +91,7 @@ const deleteVideoCategory = asyncHandler(async (req, res, next) => {
       message: "Video Category deleted successfully",
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 

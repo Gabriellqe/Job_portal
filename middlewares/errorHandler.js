@@ -34,7 +34,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
   }
   //- Jwt expired error
   if (err.name === "TokenExpiredError") {
-    customError.msg = `Your Url is expired please try again letter!: ${err.value}`;
+    customError.msg = `Your Url is expired please try again letter!: ${err.name}`;
     customError.statusCode = 401;
   }
 

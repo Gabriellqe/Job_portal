@@ -17,7 +17,7 @@ const postTutorialCategory = asyncHandler(async (req, res, next) => {
       data: newTutCat,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -31,7 +31,7 @@ const getAllTutorialCategory = asyncHandler(async (req, res, next) => {
       data: allTutCat,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -49,7 +49,7 @@ const getTutorialCategory = asyncHandler(async (req, res, next) => {
       data: tutCat,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -74,7 +74,7 @@ const updateTutorialCategory = asyncHandler(async (req, res, next) => {
       data: updateTutCat,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -91,7 +91,7 @@ const deleteTutorialCategory = asyncHandler(async (req, res, next) => {
       message: "Tutorial Category deleted successfully",
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 

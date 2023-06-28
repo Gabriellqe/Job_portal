@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 
-let videoCatSchema = new mongoose.Schema(
+let courseCatSchema = new mongoose.Schema(
   {
     title: {
       type: String,
       required: true,
       unique: true,
     },
+
     slug: {
       type: String,
       required: true,
@@ -18,4 +19,4 @@ let videoCatSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("VideoCat", videoCatSchema);
+module.exports = mongoose.model("CourseCat", courseCatSchema);

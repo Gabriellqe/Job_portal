@@ -22,7 +22,7 @@ const createReview = asyncHandler(async (req, res, next) => {
       data: newReview,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -36,7 +36,7 @@ const getAllReviews = asyncHandler(async (req, res, next) => {
       data: reviews,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -54,7 +54,7 @@ const getReviewById = asyncHandler(async (req, res, next) => {
       data: review,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 //update review status
@@ -76,7 +76,7 @@ const updateReviewStatus = asyncHandler(async (req, res, next) => {
       data: review,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -93,7 +93,7 @@ const deleteReviewById = asyncHandler(async (req, res, next) => {
       message: "Review deleted successfully",
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 

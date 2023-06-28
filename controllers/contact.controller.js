@@ -13,7 +13,7 @@ const createcontact = asyncHandler(async (req, res, next) => {
       data: newcontact,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -27,7 +27,7 @@ const getAllcontacts = asyncHandler(async (req, res, next) => {
       data: contacts,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -45,7 +45,7 @@ const getcontactById = asyncHandler(async (req, res, next) => {
       data: contact,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 //update contact status
@@ -67,7 +67,7 @@ const updatecontactStatus = asyncHandler(async (req, res, next) => {
       data: contact,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -84,7 +84,7 @@ const deletecontactById = asyncHandler(async (req, res, next) => {
       message: "contact deleted successfully",
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 

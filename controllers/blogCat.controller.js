@@ -17,7 +17,7 @@ const postBlogCategory = asyncHandler(async (req, res, next) => {
       data: newBlogCat,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -31,7 +31,7 @@ const getAllBlogCategory = asyncHandler(async (req, res, next) => {
       data: allBlogCat,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -49,7 +49,7 @@ const getBlogCategory = asyncHandler(async (req, res, next) => {
       data: blogCat,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -74,7 +74,7 @@ const updateBlogCategory = asyncHandler(async (req, res, next) => {
       data: updateBlogCat,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -91,7 +91,7 @@ const deleteBlogCategory = asyncHandler(async (req, res, next) => {
       message: "Blog Category deleted successfully",
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 

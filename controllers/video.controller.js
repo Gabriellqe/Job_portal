@@ -20,7 +20,7 @@ const createVideo = asyncHandler(async (req, res, next) => {
       data: newVideo,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 

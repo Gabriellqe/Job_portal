@@ -20,7 +20,7 @@ const createBlog = asyncHandler(async (req, res, next) => {
       data: newBlog,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 403));
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
