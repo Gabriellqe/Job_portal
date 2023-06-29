@@ -11,6 +11,14 @@ const {
 } = require("../controllers/course.controller");
 
 const {
+  createLesson,
+  deleteLesson,
+  getALesson,
+  getAllCourseLesson,
+  updateLesson,
+} = require("../controllers/lesson.controller");
+
+const {
   isAuthenticated,
   isAuthenticatedAdmin,
   isAuthenticatedBoth,
@@ -26,5 +34,15 @@ router
 router
   .route("/instructor/allcourses")
   .get(isAuthenticatedBoth, getParticularInstructorCourse);
+
+/* Lessons */
+
+router.route("/lesson/:courseId").post(isAuthenticatedBoth, createLesson);
+router
+  .route("/lesson/:courseId/:lessonId")
+  .delete(isAuthenticatedBoth, deleteLesson);
+router.route("/lessons/:courseId").get(isAuthenticated, getAllCourseLesson);
+router.route("/lesson/:lessonId").get(isAuthenticatedBoth, getALesson);
+router.route("/lesson/:lessonId").patch(isAuthenticatedBoth, updateLesson);
 
 module.exports = router;

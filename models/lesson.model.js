@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const lessonSchema = new mongoose.Schema(
   {
-    tittle: {
+    title: {
       type: String,
       required: true,
       trim: true,
@@ -19,7 +19,7 @@ const lessonSchema = new mongoose.Schema(
       type: String,
       minlenght: 10,
     },
-    video: {
+    videoUrl: {
       type: String,
     },
     freePreview: {
