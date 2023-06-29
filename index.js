@@ -10,6 +10,7 @@ const passport = require("passport");
 const session = require("express-session");
 const corsOptions = require("./config/corsOptions");
 const sessionOptions = require("./config/sessionOptions");
+const rateLimitter = require("./utils/reqLimit");
 
 const userRoute = require("./routes/user.routes");
 const tutCatRoute = require("./routes/tutCat.routes");
@@ -50,6 +51,15 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 app.get("/", (req, res) => {
   res.send(`<a href="http://localhost:5000/google">Login with google</a>`);
 });
+app.set("trust proxy", 1);
+app.use(
+  "/api",
+  rateLimitter(
+    15 * 60 * 1000,
+    50,
+    "Only 50 request allowed, please try again later."
+  )
+);
 app.use("/api/user", userRoute);
 app.use("/api/tutorial/category", tutCatRoute);
 app.use("/api/doc/category", docCatRoute);

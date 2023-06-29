@@ -15,8 +15,18 @@ const {
   isAuthenticated,
   isAuthenticatedAdmin,
 } = require("../middlewares/authToken");
+const rateLimitter = require("../utils/reqLimit");
 
-router.route("/register").post(createUser);
+router
+  .route("/register")
+  .post(
+    rateLimitter(
+      60 * 60 * 1000,
+      2,
+      "Only 2 request allowed, please try again later."
+    ),
+    createUser
+  );
 router.route("/login").post(loginUser);
 router
   .route("/:id")
