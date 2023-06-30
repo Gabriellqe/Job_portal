@@ -16,6 +16,30 @@ exports.isAuthenticated = asyncHandler(async (req, res, next) => {
   next();
 });
 
+exports.restricTo = (...roles) => {
+  return asyncHandler(async (req, res, next) => {
+    const { token } = req.cookies;
+
+    if (!token) {
+      return next(new ErrorHandler("Please login to continue", 401));
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+
+    req.user = await userModel.findById(decoded.id);
+
+    if (!roles.includes(req.user.roles)) {
+      return next(
+        new ErrorHandler(
+          `User role ${req.user.roles} is not authorized to access this route`,
+          403
+        )
+      );
+    }
+    next();
+  });
+};
+
 exports.isAuthenticatedAdmin = asyncHandler(async (req, res, next) => {
   const { token } = req.cookies;
 
@@ -56,24 +80,6 @@ exports.isAuthenticatedInstructor = asyncHandler(async (req, res, next) => {
   next();
 });
 
-exports.accessTokenMiddleware = asyncHandler(async (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer")) {
-    return next(new ErrorHandler("Authentication invalid", 401));
-  }
-  const token = authHeader.split(" ")[1];
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    // attach the user to the job routes
-    const user = await userModel.findById(decoded.id);
-    req.user = user;
-    next();
-  } catch (error) {
-    return next(new ErrorHandler("Authentication invalid", 401));
-  }
-});
-
 exports.isAuthenticatedBoth = asyncHandler(async (req, res, next) => {
   const { token } = req.cookies;
   if (!token) {
@@ -94,4 +100,22 @@ exports.isAuthenticatedBoth = asyncHandler(async (req, res, next) => {
   }
 
   next();
+});
+
+exports.accessTokenMiddleware = asyncHandler(async (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith("Bearer")) {
+    return next(new ErrorHandler("Authentication invalid", 401));
+  }
+  const token = authHeader.split(" ")[1];
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    // attach the user to the job routes
+    const user = await userModel.findById(decoded.id);
+    req.user = user;
+    next();
+  } catch (error) {
+    return next(new ErrorHandler("Authentication invalid", 401));
+  }
 });

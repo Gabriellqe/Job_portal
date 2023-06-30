@@ -9,16 +9,17 @@ const {
 const {
   isAuthenticated,
   isAuthenticatedAdmin,
+  restricTo,
 } = require("../middlewares/authToken");
 
 router
   .route("/")
-  .post(isAuthenticatedAdmin, postBlogCategory)
+  .post(restricTo("admin"), postBlogCategory)
   .get(getAllBlogCategory);
 router
   .route("/:id")
   .get(getBlogCategory)
-  .put(isAuthenticatedAdmin, updateBlogCategory)
-  .delete(isAuthenticatedAdmin, deleteBlogCategory);
+  .put(restricTo("admin"), updateBlogCategory)
+  .delete(restricTo("admin"), deleteBlogCategory);
 
 module.exports = router;

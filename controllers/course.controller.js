@@ -1,5 +1,4 @@
 const courseModel = require("../models/course.model");
-const lessonModel = require("../models/lesson.model");
 const asyncHandler = require("express-async-handler");
 const ErrorHandler = require("../utils/errorHandler");
 const slugify = require("slugify");

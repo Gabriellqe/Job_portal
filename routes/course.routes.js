@@ -19,30 +19,42 @@ const {
 } = require("../controllers/lesson.controller");
 
 const {
-  isAuthenticated,
+  /*   isAuthenticated,
   isAuthenticatedAdmin,
-  isAuthenticatedBoth,
+  isAuthenticatedBoth, */
+  restricTo,
 } = require("../middlewares/authToken");
 
-router.route("/").post(isAuthenticatedBoth, createCourse).get(getAllCourses);
+router
+  .route("/")
+  .post(restricTo("admin", "instructor"), createCourse)
+  .get(getAllCourses);
 router.route("/:slug").get(getCourse);
 router.route("/category/:category").get(getCoursesByCategory);
 router
   .route("/:id")
-  .patch(isAuthenticatedBoth, updateCourse)
-  .delete(isAuthenticatedBoth, deleteCourse);
+  .patch(restricTo("admin", "instructor"), updateCourse)
+  .delete(restricTo("admin", "instructor"), deleteCourse);
 router
   .route("/instructor/allcourses")
-  .get(isAuthenticatedBoth, getParticularInstructorCourse);
+  .get(restricTo("admin", "instructor"), getParticularInstructorCourse);
 
 /* Lessons */
 
-router.route("/lesson/:courseId").post(isAuthenticatedBoth, createLesson);
+router
+  .route("/lesson/:courseId")
+  .post(restricTo("admin", "instructor"), createLesson);
 router
   .route("/lesson/:courseId/:lessonId")
-  .delete(isAuthenticatedBoth, deleteLesson);
-router.route("/lessons/:courseId").get(isAuthenticated, getAllCourseLesson);
-router.route("/lesson/:lessonId").get(isAuthenticatedBoth, getALesson);
-router.route("/lesson/:lessonId").patch(isAuthenticatedBoth, updateLesson);
+  .delete(restricTo("admin", "instructor"), deleteLesson);
+router
+  .route("/lessons/:courseId")
+  .get(restricTo("admin", "instructor"), getAllCourseLesson);
+router
+  .route("/lesson/:lessonId")
+  .get(restricTo("admin", "instructor"), getALesson);
+router
+  .route("/lesson/:lessonId")
+  .patch(restricTo("admin", "instructor"), updateLesson);
 
 module.exports = router;
