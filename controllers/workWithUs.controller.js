@@ -1,6 +1,7 @@
 const workModel = require("../models/workWithUs.model");
 const asyncHandler = require("express-async-handler");
 const ErrorHandler = require("../utils/errorHandler");
+const APIFeatures = require("../utils/apiFeatures");
 
 const postWorkDetails = asyncHandler(async (req, res, next) => {
   try {
@@ -16,7 +17,13 @@ const postWorkDetails = asyncHandler(async (req, res, next) => {
 
 const getAllWorksDetails = asyncHandler(async (req, res, next) => {
   try {
-    const workDetails = await workModel.find();
+    const features = new APIFeatures(workModel.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+
+    const workDetails = await features.query;
     if (!workDetails) {
       return next(new ErrorHandler("Details not found", 404));
     }
