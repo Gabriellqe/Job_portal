@@ -31,6 +31,7 @@ const courseRoute = require("./routes/course.routes");
 const workRoute = require("./routes/work.routes");
 const projectRoute = require("./routes/project.routes");
 const bookSessionRoute = require("./routes/bookSession.routes");
+const qnaRoute = require("./routes/qna.routes");
 const notFoundMiddleware = require("./middlewares/not-found.js");
 const errorHandlerMiddleware = require("./middlewares/errorHandler.js");
 const passportSetup = require("./utils/passport");
@@ -82,6 +83,7 @@ app.use("/api/course", courseRoute);
 app.use("/api/work", workRoute);
 app.use("/api/project", projectRoute);
 app.use("/api/bookSession", bookSessionRoute);
+app.use("/api/qna", qnaRoute);
 
 app.use("/", googleRouter);
 
